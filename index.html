@@ -26,7 +26,7 @@
 	var gimmeObj = function(){
 		console.log(JSON.stringify($.jStorage.get('kolege')))
 	}
-	// to inject your own object on the fly run   setObj( { your object here } )   and refresh the page 
+	// to inject your own object on the fly run   setObj( { your object here } )   and refresh the page
 	var setObj = function(obj){
 		$.jStorage.set('kolege', obj)
 	}
@@ -160,6 +160,9 @@
 						arr4.push(x.slice(0,-1))
 						return x;
 					});
+					$('input').click(function(){
+          $(this).val('');
+        });
 
 		console.log(arr4 + ' ' + '<- returns names of all people with the tag \'Austin\'')
 		console.log("run \"output\" in console to get the whole object ")
