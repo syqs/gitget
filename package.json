@@ -1,0 +1,13 @@
+{
+  "name": "gitget",
+  "version": "1.0.0",
+  "description": "git getter",
+  "main": "app.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "console.log('23')"
+  },
+  "author": "K",
+  "license": "MIT"
+}
