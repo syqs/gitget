@@ -1,172 +1,170 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<script src="jQuery.js"></script>
 	<script src="storage.js"></script>
 	<script src="underscore.js"></script>
 	<title>GitGetter</title>
 </head>
+
 <body>
-<style type="text/css">
-	.users {margin-top:20px;margin-bottom: 20px}
-</style>
-<div class="tags" style="position:fixed; width:200px;height:200px; background-color: #cecece; left:380px ">
-<form>
-	<input type="text" name="theName" class="name" value="name">
-	<input type="text" name="theTags" class="tags" value="tags">
-	<input type="text" name="theWeb" class="web" value="http://">
-</form>
-</div>
-<script>
-	// usage:
+	<style type="text/css">
+		.users {
+			margin-top: 20px;
+			margin-bottom: 20px
+		}
+	</style>
+	<div class="tags" style="position:fixed; width:200px;height:200px; background-color: #cecece; left:380px ">
+		<form>
+			<input type="text" name="theName" class="name" value="name">
+			<input type="text" name="theTags" class="tags" value="tags">
+			<input type="text" name="theWeb" class="web" value="http://">
+		</form>
+	</div>
+	<script>
+		// usage:
 
-	// jStorage will save objects in cache for as long as your browser will let it,
-	// but if you want to be sure you dont lose data or you want to send it to someone
-	// in devTools run   gimmeObj()   to export the object you have made modifications to so you can send or save
-	var gimmeObj = function(){
-		console.log(JSON.stringify($.jStorage.get('kolege')))
-	}
-	// to inject your own object on the fly run   setObj( { your object here } )   and refresh the page
-	var setObj = function(obj){
-		$.jStorage.set('kolege', obj)
-	}
-	var output;
-	$(document).ready(function(){
-		// uncomment and run app.js with node to generate object from file.
+		// jStorage will save objects in cache for as long as your browser will let it,
+		// but if you want to be sure you dont lose data or you want to send it to someone
+		// in devTools run   gimmeObj()   to export the object you have made modifications to so you can send or save
+		var gimmeObj = function() {
+				console.log(JSON.stringify($.jStorage.get('kolege')))
+			}
+			// to inject your own object on the fly run   setObj( { your object here } )   and refresh the page
+		var setObj = function(obj) {
+			$.jStorage.set('kolege', obj)
+		}
+		var output;
+		$(document).ready(function() {
+			// uncomment and run app.js with node to generate object from file.
 
-		// get object from local storage or load demo obj
-		output = $.jStorage.get('kolege') || {  "githandle": [
-		        {
-		            "hash": "0f40764b75d5d110ee2e1a8413986799fb89eaa4"
-		        },
-		        "John Doe",
-		        [
-		            "d",
-		            "Austin",
-		            "dwewd",
-		            "Game dev",
-		            "heartstone",
-		            "Student"
-		        ],
-		        "http://github.io/"
-		    ],
-		    "githandle2": [
-		        {
-		            "hash": "e882369a22ecb6d18992238911890fd20e1a473a"
-		        },
-		        "Jane Does",
-		        [
-		            "startup",
-		            "student"
-		        ],
-		        "http://www.code4life.com"
-		    ],
-		    "githandle3": [
-		        {
-		            "hash": "e80fdd4c5c50af0636e1bc7cf90ecd7343dd7ccc"
-		        },
-		        "mr fancypants",
-		        [
-		            "student"
-		        ]
-		    ],
-		    "githandle4": [
-		        {
-		            "hash": "e80fdd4c5c50af0636e1bc7cf90ecd7343dd7e22"
-		        },
-		        null,
-		        [
-		            "",
-		            "",
-		            "Austin",
-		            "Arduino",
-		            "5k"
-		        ],
-		        "http://www.someweb.com"
-		    ]
-		};
-		// use $.jStorage.flush() to clear cache
-		$.jStorage.set('kolege', output);
-		var users = Object.keys(output)
-		_.each(users, function(x){
-			$('<div class="'+ x +' users"><a href="https://www.github.com/'+ x +'" target="_blank">'+ x +'</a><a href="#'+ x +'" style="padding:20px">Add Tags senor/ita</a></div>').appendTo($('body'));
+			// get object from local storage or load demo obj
+			output = $.jStorage.get('kolege') || {
+				"githandle": [{
+						"hash": "0f40764b75d5d110ee2e1a8413986799fb89eaa4"
+					},
+					"John Doe", [
+						"d",
+						"Austin",
+						"dwewd",
+						"Game dev",
+						"heartstone",
+						"Student"
+					],
+					"http://github.io/"
+				],
+				"githandle2": [{
+						"hash": "e882369a22ecb6d18992238911890fd20e1a473a"
+					},
+					"Jane Does", [
+						"startup",
+						"student"
+					],
+					"http://www.code4life.com"
+				],
+				"githandle3": [{
+						"hash": "e80fdd4c5c50af0636e1bc7cf90ecd7343dd7ccc"
+					},
+					"mr fancypants", [
+						"student"
+					]
+				],
+				"githandle4": [{
+						"hash": "e80fdd4c5c50af0636e1bc7cf90ecd7343dd7e22"
+					},
+					null, [
+						"",
+						"",
+						"Austin",
+						"Arduino",
+						"5k"
+					],
+					"http://www.someweb.com"
+				]
+			};
+			// use $.jStorage.flush() to clear cache
+			$.jStorage.set('kolege', output);
+			var users = Object.keys(output)
+			_.each(users, function(x) {
+				$('<div class="' + x + ' users"><a href="https://www.github.com/' + x + '" target="_blank">' + x + '</a><a href="#' + x + '" style="padding:20px">Add Tags senor/ita</a></div>').appendTo($('body'));
+			});
+			// Get the name of the user that the user clicked on
+			$('.users').click(function() {
+
+				currentUser = $(this).text().split('Add')[0];
+				var tagsy = $('input.tags').val().toString();
+				var namesy = $('input.name').val().toString();
+				var websy = $('input.web').val().toString();
+
+				(output[currentUser]['1'] !== namesy) ? output[currentUser]['1'] = namesy || output[currentUser]['1']: output[currentUser]['1'];
+
+				(output[currentUser]['3'] !== websy) ? output[currentUser]['3'] = websy || output[currentUser]['3']: output[currentUser]['3'];
+
+				(!output[currentUser]['2']) ? output[currentUser]['2'] = []: ((tagsy === '') ? console.log('no tag') : output[currentUser]['2'].push(tagsy));
+
+				var storage = output;
+				$.jStorage.set('kolege', storage);
+				// Stop page from scrolling to the top
+				$("#" + currentUser).scroll();
+			});
+
+			// Some object traversing with functional code :: needs refactoring
+			var arr = _.chain(output)
+				.map(function(students, i) {
+					if (students[2] !== null) {
+						var result = _.map(students, function(x) {
+							return x;
+						})
+						return _.filter(students[2], function(x) {
+							if (x.toLowerCase() === "austin") {
+								return true;
+							}
+						})
+					}
+				})
+				.map(function(x) {
+					if (x.length > 0) {
+						return x[0]
+					}
+				})
+				.value();
+
+			var arr2 = _.chain(output)
+				.map(function(students, i) {
+					if (students[1] !== null) {
+						var result = _.map(students, function(x) {
+							return x;
+						})
+						return students
+					}
+				})
+				.map(function(x) {
+					if (x) {
+						if (x.length > 0) {
+							return x[1]
+						}
+					}
+				})
+				.value()
+			var arr3 = _.flatten(_.filter(_.zip(arr, arr2), function(x) {
+				if (x[0] === "Austin")
+					return x
+			})).toString().split('Austin,');
+
+			arr3.shift();
+			var arr4 = [];
+			_.map(arr3, function(x) {
+				arr4.push(x.slice(0, -1))
+				return x;
+			});
+			$('input').click(function() {
+				$(this).val('');
+			});
+
+			console.log(arr4 + ' ' + '<- returns names of all people with the tag \'Austin\'')
+			console.log("run \"output\" in console to get the whole object ")
 		});
-		// Get the name of the user that the user clicked on
-          $('.users').click(function(){
-
-	            currentUser = $(this).text().split('Add')[0];
-	            var tagsy = $('input.tags').val().toString();
-	            var namesy = $('input.name').val().toString();
-	            var websy = $('input.web').val().toString();
-
-	            (output[currentUser]['1'] !== namesy) ? output[currentUser]['1'] =  namesy || output[currentUser]['1'] : output[currentUser]['1'];
-
-	            (output[currentUser]['3'] !== websy) ? output[currentUser]['3'] =  websy || output[currentUser]['3'] : output[currentUser]['3'];
-
-	            (!output[currentUser]['2']) ? output[currentUser]['2'] = [] : ((tagsy === '') ? console.log('no tag') : output[currentUser]['2'].push(tagsy));
-
-	            var storage = output;
-	            $.jStorage.set('kolege', storage);
-	            // Stop page from scrolling to the top
- 							$( "#"+currentUser ).scroll();
-        });
-
-				// Some object traversing with functional code :: needs refactoring
-				var arr = _.chain(output)
-									 .map(function(students, i){
-										 if (students[2] !== null){
-											 var result = _.map(students, function(x){
-														 return x;
-											 })
-										 	return _.filter(students[2], function(x) {
-												if (x.toLowerCase() === "austin"){
-													return true;
-												}
-											})
-										}
-									})
-									.map(function(x){
-										if(x.length>0){
-											return x[0]
-										}
-									})
-									.value();
-
-				var arr2 = _.chain(output)
-									 .map(function(students, i){
-										 if (students[1] !== null){
-											 var result = _.map(students, function(x){
-														 return x;
-											 })
-										 	return students
-										}
-									})
-									.map(function(x){
-										if(x){
-											if(x.length>0){
-												return x[1]
-											}
-										}
-									})
-									.value()
-					var arr3 = _.flatten(_.filter(_.zip(arr,arr2), function(x){
-						if (x[0] === "Austin")
-							return x
-					})).toString().split('Austin,');
-
-					arr3.shift();
-					var arr4 = [];
-					_.map(arr3, function(x){
-						arr4.push(x.slice(0,-1))
-						return x;
-					});
-					$('input').click(function(){
-          $(this).val('');
-        });
-
-		console.log(arr4 + ' ' + '<- returns names of all people with the tag \'Austin\'')
-		console.log("run \"output\" in console to get the whole object ")
-	});
-</script>
+	</script>
 </body>
 </html>
